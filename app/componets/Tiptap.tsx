@@ -2,7 +2,6 @@
 
 import BulletList from '@tiptap/extension-bullet-list'
 import Link from '@tiptap/extension-link'
-import Image from '@tiptap/extension-image'
 import OrderedList from '@tiptap/extension-ordered-list'
 import CustomImage from "@/app/componets/customImage"
 import { useEditor, EditorContent } from '@tiptap/react'
@@ -44,9 +43,10 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
     const addImage = () => {
         const url = window.prompt('URL')
 
-        if (url) {
-            editor.chain().setImage({ src: url }).run()
-        }
+        const commands: any = editor.commands
+
+        commands.setImage({ src: url })
+
     }
 
     return (

@@ -15,13 +15,14 @@ export default function Home() {
     const router = useRouter()
 
     const handlerSave = () => {
+        console.log(content)
         cookie.set('content', content || "");
         router.push("/")
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div className="z-10 w-full max-w-5xl font-mono text-sm">
+        <main className="flex min-h-screen flex-col items-center justify-between p-16">
+            <div className="z-10 w-full max-w-7xl font-mono text-sm">
                 <h1 className="text-4xl font-bold mb-8">Tiptap Editor</h1>
 
                 <Tiptap content={content} className="focus:outline-none" onChange={setContent} />
