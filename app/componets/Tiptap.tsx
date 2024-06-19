@@ -62,9 +62,6 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
                 <button onClick={() => editor.chain().focus().setTextAlign('right').run()} className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}>
                     Right
                 </button>
-                <button onClick={() => editor.chain().focus().setTextAlign('justify').run()} className={editor.isActive({ textAlign: 'justify' }) ? 'is-active' : ''}>
-                    Justify
-                </button>
             </div>
             <EditorContent editor={editor} />
         </div>
