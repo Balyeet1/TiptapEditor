@@ -9,10 +9,10 @@ import clsx from 'clsx';
 
 const CustomImage = Node.create({
     name: 'customImage',
-
     inline: false,
     group: 'block',
     draggable: true,
+
 
     addAttributes() {
         return {
@@ -37,7 +37,7 @@ const CustomImage = Node.create({
             const { src, alt, title, width, alignment } = node.attrs
 
             const menuRef = useRef(null);
-            const [menuPosition, setMenuPosition] = useState({ top: "-1rem", right: "0" })
+            const [isChecked, setIsChecked] = useState(false);
             const [showMenu, setShowMenu] = useState(false);
             const imageRef = useRef(null);
 
@@ -59,62 +59,59 @@ const CustomImage = Node.create({
                 };
             }, []);
 
-            useEffect(() => {
-                if (!imageRef) return null
-
-                const imageRect = imageRef.current.getBoundingClientRect();
-
-
-                setMenuPosition({ top: "-1rem", })
-
-            }, [width, alignment])
-
             return (
-                <NodeViewWrapper className="block mt-2 mb-2">
-                    <figure style={{ width: width, marginLeft: alignment == "start" ? "0px" : "auto", marginRight: alignment == "end" ? "0px" : "auto" }} className={`flex justify-center relative max-w-full min-w-0`}>
-                        <img
-                            src={src}
-                            alt={alt}
-                            title={title}
-                            onClick={handleImageClick}
-                            ref={imageRef}
-                            className={clsx(
-                                'hover:border-3',
-                                'hover:border-blue-500',
-                                'block w-full',
-                                {
-                                    'border-blue-500 border-3': showMenu
-                                }
-                            )}
-                        />
-                        {showMenu && (
-                            <div
-                                className="absolute bg-white border shadow-md rounded-md p-1"
-                                style={menuPosition}
-                                ref={menuRef}
-                                id="image-menu"
-                            >
-                                <div className="flex space-x-2">
-                                    <input
-                                        type="text"
-                                        value={width}
-                                        placeholder="Width"
-                                        onChange={(e) => updateAttributes({ width: e.target.value })}
-                                        className="border rounded p-1 text-black w-10"
-                                    />
-                                    <select
-                                        value={alignment}
-                                        onChange={(e) => updateAttributes({ alignment: e.target.value })}
-                                        className="border rounded p-1 text-black"
-                                    >
-                                        <option value="start">Left</option>
-                                        <option value="center">Center</option>
-                                        <option value="end">Right</option>
-                                    </select>
-                                </div>
-                            </div>
+                <NodeViewWrapper style={{ float: isChecked ? "left" : "none", width: width, marginLeft: alignment == "start" ? "0px" : "auto", marginRight: alignment == "end" ? "0px" : "auto" }} className={`flex justify-center relative max-w-full min-w-0 mr-2`}>
+                    <img
+                        src={src}
+                        alt={alt}
+                        title={title}
+                        onClick={handleImageClick}
+                        ref={imageRef}
+                        className={clsx(
+                            'hover:border-3',
+                            'hover:border-blue-500',
+                            'block w-full',
+                            {
+                                'border-blue-500 border-3': showMenu
+                            }
                         )}
-                    </figure>
+                    />
+                    {showMenu && (
+                        <div
+                            className="absolute bg-white border shadow-md rounded-md p-1"
+                            style={{ top: "-1rem" }}
+                            ref={menuRef}
+                            id="image-menu"
+                        >
+                            <div className="flex space-x-2">
+                                <input
+                                    type="text"
+                                    value={width}
+                                    placeholder="Width"
+                                    onChange={(e) => updateAttributes({ width: e.target.value })}
+                                    className="border rounded p-1 text-black w-10"
+                                />
+                                <select
+                                    value={alignment}
+                                    onChange={(e) => {
+
+                                        setIsChecked(false)
+                                        updateAttributes({ alignment: e.target.value })
+                                    }}
+                                    className="border rounded p-1 text-black"
+                                >
+                                    <option value="start">Left</option>
+                                    <option value="center">Center</option>
+                                    <option value="end">Right</option>
+                                </select>
+                                <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={() => setIsChecked(!isChecked)}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </NodeViewWrapper >
             )
         })
