@@ -21,6 +21,7 @@ const CustomImage = Node.create({
             title: { default: null },
             width: { default: '100%' },
             alignment: { default: 'center' },
+            float: { default: "none" }
         }
     },
 
@@ -34,10 +35,9 @@ const CustomImage = Node.create({
 
     addNodeView() {
         return ReactNodeViewRenderer(({ node, updateAttributes }) => {
-            const { src, alt, title, width, alignment } = node.attrs
+            const { src, alt, title, width, alignment, float } = node.attrs
 
             const menuRef = useRef(null);
-            const [isChecked, setIsChecked] = useState(false);
             const [showMenu, setShowMenu] = useState(false);
             const imageRef = useRef(null);
 
@@ -47,7 +47,6 @@ const CustomImage = Node.create({
 
             useEffect(() => {
                 const handleClickOutside = (event) => {
-                    console.log()
                     if (imageRef.current && !imageRef.current.contains(event.target) && !event.target.closest("#image-menu")) {
                         setShowMenu(false);
                     }
@@ -60,7 +59,7 @@ const CustomImage = Node.create({
             }, []);
 
             return (
-                <NodeViewWrapper style={{ float: isChecked ? "left" : "none", width: width, marginLeft: alignment == "start" ? "0px" : "auto", marginRight: alignment == "end" ? "0px" : "auto" }} className={`flex justify-center relative max-w-full min-w-0 mr-2`}>
+                <NodeViewWrapper style={{ float: float, width: width, marginLeft: alignment == "start" ? "0px" : "auto", marginRight: alignment == "end" ? "0px" : "auto" }} className={`flex justify-center relative max-w-full min-w-0 mr-2`}>
                     <img
                         src={src}
                         alt={alt}
@@ -83,7 +82,7 @@ const CustomImage = Node.create({
                             ref={menuRef}
                             id="image-menu"
                         >
-                            <div className="flex space-x-2">
+                            <div className="flex items-center space-x-2">
                                 <input
                                     type="text"
                                     value={width}
@@ -94,9 +93,7 @@ const CustomImage = Node.create({
                                 <select
                                     value={alignment}
                                     onChange={(e) => {
-
-                                        setIsChecked(false)
-                                        updateAttributes({ alignment: e.target.value })
+                                        updateAttributes({ alignment: e.target.value, float: "none" })
                                     }}
                                     className="border rounded p-1 text-black"
                                 >
@@ -106,9 +103,14 @@ const CustomImage = Node.create({
                                 </select>
                                 <input
                                     type="checkbox"
-                                    checked={isChecked}
-                                    onChange={() => setIsChecked(!isChecked)}
-                                />
+                                    checked={float === "left"}
+                                    onChange={(e) => updateAttributes({ float: float === "left" ? "none" : "left" })}
+                                />Left
+                                <input
+                                    type="checkbox"
+                                    checked={float === "right"}
+                                    onChange={(e) => updateAttributes({ float: float === "right" ? "none" : "right" })}
+                                />Right
                             </div>
                         </div>
                     )}

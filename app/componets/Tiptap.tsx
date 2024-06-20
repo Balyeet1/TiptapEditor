@@ -1,8 +1,6 @@
 'use client'
 
-import BulletList from '@tiptap/extension-bullet-list'
 import Link from '@tiptap/extension-link'
-import OrderedList from '@tiptap/extension-ordered-list'
 import CustomImage from "@/app/componets/customImage"
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -29,8 +27,6 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
             Link.configure({
                 openOnClick: true,
             }),
-            BulletList,
-            OrderedList,
             CustomImage
         ],
         content: content,
