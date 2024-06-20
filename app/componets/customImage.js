@@ -58,8 +58,27 @@ const CustomImage = Node.create({
                 };
             }, []);
 
+            const style = {
+                float,
+                width,
+                ...(float === 'none' && {
+                    marginLeft: alignment === "start" ? "0px" : "auto",
+                    marginRight: alignment === "end" ? "0px" : "auto"
+                })
+            };
+
             return (
-                <NodeViewWrapper style={{ float: float, width: width, marginLeft: alignment == "start" ? "0px" : "auto", marginRight: alignment == "end" ? "0px" : "auto" }} className={`flex justify-center relative max-w-full min-w-0 mr-2`}>
+                <NodeViewWrapper
+                    style={style}
+                    data-drag-handle
+                    className={clsx(
+                        `flex justify-center relative max-w-full min-w-0`,
+                        {
+                            "mr-5": float == "left",
+                            "ml-": float == "right"
+                        }
+                    )}
+                >
                     <img
                         src={src}
                         alt={alt}

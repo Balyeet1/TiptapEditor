@@ -5,6 +5,7 @@ import CustomImage from "@/app/componets/customImage"
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
+import Dropcursor from '@tiptap/extension-dropcursor'
 
 
 const Tiptap = ({ className, content, onChange }: { className?: string, content?: string, onChange?: any }) => {
@@ -27,7 +28,11 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
             Link.configure({
                 openOnClick: true,
             }),
-            CustomImage
+            CustomImage,
+            Dropcursor.configure({
+                color: '#ff0000',
+                width: 1,
+            }),
         ],
         content: content,
     })
