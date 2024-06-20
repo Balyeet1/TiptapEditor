@@ -27,7 +27,7 @@ export default function Home() {
 
                 <Tiptap content={content} className="focus:outline-none" onChange={setContent} />
             </div>
-            <button onClick={handlerSave}>Save</button>
+            <button onClick={handlerSave} className="mt-3">Save</button>
         </main>
     );
 }

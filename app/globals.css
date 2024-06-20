@@ -8,6 +8,22 @@
   --background-end-rgb: 255, 255, 255;
   --white: #FFF;
   --black: #2E2B29;
+  --black-contrast: #110F0E;
+  --gray-1: rgba(61, 37, 20, .05);
+  --gray-2: rgba(61, 37, 20, .08);
+  --gray-3: rgba(61, 37, 20, .12);
+  --gray-4: rgba(53, 38, 28, .3);
+  --gray-5: rgba(28, 25, 23, .6);
+  --green: #22C55E;
+  --purple: #6A00F5;
+  --purple-contrast: #5800CC;
+  --purple-light: rgba(88, 5, 255, .05);
+  --yellow-contrast: #FACC15;
+  --yellow: rgba(250, 204, 21, .4);
+  --yellow-light: #FFFAE5;
+  --red: #FF5C33;
+  --red-light: #FFEBE5;
+  --shadow: 0px 12px 33px 0px rgba(0, 0, 0, .06), 0px 3.618px 9.949px 0px rgba(0, 0, 0, .04);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -108,4 +124,66 @@ body {
   p {
     margin: 0.5em 0;
   }
+}
+
+.bubble-menu {
+  background-color: var(--white);
+  border: 1px solid var(--gray-1);
+  border-radius: 0.7rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  padding: 0.2rem;
+
+  button {
+    background-color: unset;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+
+    &:hover {
+      background-color: var(--gray-3);
+    }
+
+    &.is-active {
+      background-color: var(--purple);
+
+      &:hover {
+        background-color: var(--purple-contrast);
+      }
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.1;
+  margin-top: 2.5rem;
+  text-wrap: pretty;
+}
+
+h1,
+h2 {
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h1 {
+  font-size: 1.4rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1rem;
 }
