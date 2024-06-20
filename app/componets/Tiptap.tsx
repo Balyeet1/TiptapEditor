@@ -1,11 +1,17 @@
 'use client'
 
+import { useEditor, EditorContent } from '@tiptap/react'
+import { createLowlight } from 'lowlight';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Link from '@tiptap/extension-link'
 import CustomImage from "@/app/componets/customImage"
-import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
 import Dropcursor from '@tiptap/extension-dropcursor'
+import js from 'highlight.js/lib/languages/javascript'
+
+const lowlight = createLowlight()
+lowlight.register("js", js)
 
 
 const Tiptap = ({ className, content, onChange }: { className?: string, content?: string, onChange?: any }) => {
@@ -22,6 +28,9 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
         },
         extensions: [
             StarterKit,
+            CodeBlockLowlight.configure({
+                lowlight: lowlight
+            }),
             TextAlign.configure({
                 types: ['heading', 'paragraph'],
             }),
@@ -35,6 +44,7 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
             }),
         ],
         content: content,
+
     })
 
     if (!editor) {
@@ -62,6 +72,12 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
                 </button>
                 <button onClick={() => editor.chain().focus().setTextAlign('right').run()} className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}>
                     Right
+                </button>
+                <button
+                    onClick={() => editor.chain().focus().setCodeBlock().run()}
+                    disabled={editor.isActive('codeBlock')}
+                >
+                    Set code block
                 </button>
             </div>
             <EditorContent editor={editor} />
