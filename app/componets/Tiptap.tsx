@@ -9,6 +9,8 @@ import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import js from 'highlight.js/lib/languages/javascript'
+import Highlight from '@tiptap/extension-highlight'
+
 
 const lowlight = createLowlight()
 lowlight.register("js", js)
@@ -28,6 +30,7 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
         },
         extensions: [
             StarterKit,
+            Highlight,
             CodeBlockLowlight.configure({
                 lowlight: lowlight
             }),
@@ -79,6 +82,19 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
                 >
                     Set code block
                 </button>
+                <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}>
+                    H1
+                </button>
+                <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}>
+                    H2
+                </button>
+                <button onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}>
+                    H3
+                </button>
+                <button onClick={() => editor.chain().focus().toggleHighlight().run()} className={editor.isActive('highlight') ? 'is-active' : ''}>
+                    Highlight
+                </button>
+
             </div>
             {editor && <BubbleMenu editor={editor} shouldShow={({ state, from }) => {
                 const $pos = state.doc.resolve(from)
