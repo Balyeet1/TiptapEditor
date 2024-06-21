@@ -133,6 +133,7 @@ body {
   box-shadow: var(--shadow);
   display: flex;
   padding: 0.2rem;
+  color: black;
 
   button {
     background-color: unset;

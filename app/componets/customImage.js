@@ -75,7 +75,7 @@ const CustomImage = Node.create({
                         `flex justify-center relative max-w-full min-w-0`,
                         {
                             "mr-5": float == "left",
-                            "ml-": float == "right"
+                            "ml-5": float == "right"
                         }
                     )}
                 >
@@ -124,12 +124,12 @@ const CustomImage = Node.create({
                                     type="checkbox"
                                     checked={float === "left"}
                                     onChange={(e) => updateAttributes({ float: float === "left" ? "none" : "left" })}
-                                />Left
+                                /><strong className="text-black">Left</strong>
                                 <input
                                     type="checkbox"
                                     checked={float === "right"}
                                     onChange={(e) => updateAttributes({ float: float === "right" ? "none" : "right" })}
-                                />Right
+                                /><strong className="text-black">Right</strong>
                             </div>
                         </div>
                     )}
