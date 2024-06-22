@@ -1,11 +1,13 @@
 "use client"
 
 import "@/app/globals.css";
-import { Node, mergeAttributes } from '@tiptap/core'
+import { Node, mergeAttributes, textInputRule } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
 import { NodeViewWrapper } from '@tiptap/react'
 import { useState, useRef, useEffect } from "react";
 import clsx from 'clsx';
+
+const imageUrlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*\.(jpe?g|png|gif|bmp|webp|svg)$/i;
 
 const CustomImage = Node.create({
     name: 'customImage',
@@ -13,6 +15,20 @@ const CustomImage = Node.create({
     group: 'block',
     draggable: true,
 
+    addInputRules() {
+        return [
+            textInputRule({
+                find: imageUrlRegex,
+                replace: ({ input }) => {
+                    const imageNode = this.type.create({
+                        src: input.text
+                    });
+
+                    return [imageNode];
+                },
+            }),
+        ]
+    },
 
     addAttributes() {
         return {
