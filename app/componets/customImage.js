@@ -1,34 +1,16 @@
-"use client"
-
 import "@/app/globals.css";
-import { Node, mergeAttributes, textInputRule } from '@tiptap/core'
+import { Node, mergeAttributes, PasteRule } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react'
 import { NodeViewWrapper } from '@tiptap/react'
 import { useState, useRef, useEffect } from "react";
 import clsx from 'clsx';
-
-const imageUrlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*\.(jpe?g|png|gif|bmp|webp|svg)$/i;
 
 const CustomImage = Node.create({
     name: 'customImage',
     inline: false,
     group: 'block',
     draggable: true,
-
-    addInputRules() {
-        return [
-            textInputRule({
-                find: imageUrlRegex,
-                replace: ({ input }) => {
-                    const imageNode = this.type.create({
-                        src: input.text
-                    });
-
-                    return [imageNode];
-                },
-            }),
-        ]
-    },
+    atom: true,
 
     addAttributes() {
         return {
@@ -162,6 +144,17 @@ const CustomImage = Node.create({
                 });
             },
         };
+    },
+    addPasteRules() {
+        return [
+            new PasteRule({
+                find: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*\.(jpe?g|png|gif|bmp|webp|svg)$/gi,
+                handler: ({ state, range, match }) => {
+                    const imageNode = this.type.create({ src: match[0] });
+                    return state.tr.replaceRangeWith(range.from, range.to, imageNode);
+                },
+            }),
+        ];
     },
 })
 

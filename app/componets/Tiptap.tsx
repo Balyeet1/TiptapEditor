@@ -4,7 +4,6 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import { createLowlight } from 'lowlight';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import Link from '@tiptap/extension-link'
 import CustomImage from "@/app/componets/customImage"
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
@@ -15,9 +14,6 @@ import Placeholder from '@tiptap/extension-placeholder'
 import { SmilieReplacer } from '@/app/componets/smilieReplacer';
 import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style'
-import { useState } from 'react';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-import Image from 'next/image';
 
 
 const fonts = [
@@ -48,6 +44,7 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
         },
         extensions: [
             StarterKit,
+            CustomImage,
             SmilieReplacer,
             CustomDocument,
             Highlight,
@@ -70,10 +67,6 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
             TextAlign.configure({
                 types: ['heading', 'paragraph'],
             }),
-            Link.configure({
-                openOnClick: true,
-            }),
-            CustomImage,
             Dropcursor.configure({
                 color: '#ff0000',
                 width: 1,
