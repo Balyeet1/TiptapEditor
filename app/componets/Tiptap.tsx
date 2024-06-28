@@ -3,6 +3,7 @@
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import { createLowlight } from 'lowlight';
+import Image from '@tiptap/extension-image';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import CustomImage from "@/app/componets/customImage"
 import StarterKit from '@tiptap/starter-kit'
@@ -15,13 +16,6 @@ import { SmilieReplacer } from '@/app/componets/smilieReplacer';
 import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style'
 
-
-const fonts = [
-    "Default", "Arial", "Courier New", "Georgia",
-    "Lucida Sans Unicode", "Tahoma", "Times New Roman",
-    "Trebuchet MS", "Verdana"
-];
-
 const CustomDocument = Document.extend({
     content: 'heading block*',
 })
@@ -30,8 +24,12 @@ const lowlight = createLowlight()
 lowlight.register("js", js)
 
 
-const Tiptap = ({ className, content, onChange }: { className?: string, content?: string, onChange?: any }) => {
+const Tiptap = ({ className, content, onChange, isReadonly }: { className?: string, content?: string, onChange?: any, isReadonly: boolean }) => {
+
+    //const ImageExtention = isReadonly ? Image : CustomImage
+
     const editor = useEditor({
+        editable: !isReadonly,
         editorProps: {
             attributes: {
                 class: className || ""
@@ -44,8 +42,20 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
         },
         extensions: [
             StarterKit,
-            CustomImage,
             SmilieReplacer,
+            CustomImage.extend({
+                addAttributes() {
+                    return {
+                        src: { default: null },
+                        alt: { default: null },
+                        title: { default: null },
+                        width: { default: '100%' },
+                        alignment: { default: 'center' },
+                        float: { default: "none" },
+                        editable: {default: !isReadonly},
+                    }
+                }
+            }),
             CustomDocument,
             Highlight,
             TextStyle,
@@ -82,17 +92,14 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
 
     const addImage = () => {
         const url = window.prompt('URL')
-
         const commands: any = editor.commands
 
         commands.setImage({ src: url })
-
     }
-
 
     return (
         <div>
-            <div className="flex justify-between border border-white mb-5 cols-3 grid grid-cols-8 gap-2 sticky top-0 z-10 bg-white">
+            {!isReadonly && <div className="flex justify-between border border-white mb-5 cols-3 grid grid-cols-8 gap-2 sticky top-0 z-10 bg-white">
                 <button onClick={addImage}>Add image from URL</button>
                 <button onClick={() => editor.chain().focus().setTextAlign('left').run()} className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}>
                     Left
@@ -171,7 +178,7 @@ const Tiptap = ({ className, content, onChange }: { className?: string, content?
                 >
                     Monospace
                 </button>
-            </div>
+            </div>}
             {editor && <BubbleMenu editor={editor} shouldShow={({ state, from }) => {
                 const $pos = state.doc.resolve(from)
                 const node = $pos.node($pos.depth);

@@ -19,10 +19,10 @@ const CustomImage = Node.create({
             title: { default: null },
             width: { default: '100%' },
             alignment: { default: 'center' },
-            float: { default: "none" }
+            float: { default: "none" },
+            editable: { default: true },
         }
     },
-
     parseHTML() {
         return [{ tag: 'img[src]' }]
     },
@@ -33,7 +33,7 @@ const CustomImage = Node.create({
 
     addNodeView() {
         return ReactNodeViewRenderer(({ node, updateAttributes }) => {
-            const { src, alt, title, width, alignment, float } = node.attrs
+            const { src, alt, title, width, alignment, float, editable } = node.attrs
 
             const menuRef = useRef(null);
             const [showMenu, setShowMenu] = useState(false);
@@ -83,7 +83,7 @@ const CustomImage = Node.create({
                         title={title}
                         onClick={handleImageClick}
                         ref={imageRef}
-                        className={clsx(
+                        className={!editable ? "block w-full" : clsx(
                             'hover:border-3',
                             'hover:border-blue-500',
                             'block w-full',
@@ -92,7 +92,7 @@ const CustomImage = Node.create({
                             }
                         )}
                     />
-                    {showMenu && (
+                    {editable && showMenu && (
                         <div
                             className="absolute bg-white border shadow-md rounded-md p-1"
                             style={{ top: "-1rem" }}
