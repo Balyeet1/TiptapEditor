@@ -12,7 +12,17 @@ import Placeholder from '@tiptap/extension-placeholder'
 import { SmilieReplacer } from '@/app/componets/smilieReplacer';
 import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style'
-import { config } from 'process';
+import FontSize from 'tiptap-extension-font-size';
+
+interface CustomImageConfig {
+    src: { default: null };
+    alt: { default: null };
+    title: { default: null };
+    width: { default: string };
+    alignment: { default: string };
+    float: { default: string };
+    editable?: boolean;
+}
 
 const CustomDocument = Document.extend({
     content: 'heading block*',
@@ -44,17 +54,7 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
             CustomImage.extend({
                 addAttributes() {
 
-                    interface Config {
-                        src: { default: null };
-                        alt: { default: null };
-                        title: { default: null };
-                        width: { default: string };
-                        alignment: { default: string };
-                        float: { default: string };
-                        editable?: boolean;
-                    }
-
-                    const configs: Config = {
+                    const configs: CustomImageConfig = {
                         src: { default: null },
                         alt: { default: null },
                         title: { default: null },
@@ -73,6 +73,7 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
             CustomDocument,
             Highlight,
             TextStyle,
+            FontSize,
             FontFamily.configure({
                 types: ['textStyle'],
             }),
@@ -192,6 +193,19 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
                 >
                     Monospace
                 </button>
+                <select
+                className='is-active'
+                    onChange={(e) => editor.chain().focus().setFontSize(e.target.value).run()}
+                    value={editor.isActive('textStyle') ? editor.getAttributes('textStyle').fontSize : '16pt'} // Default to 16pt if not active
+                >
+                    <option value="14pt">14pt</option>
+                    <option value="16pt">16pt</option>
+                    <option value="18pt">18pt</option>
+                    <option value="20pt">20pt</option>
+                    <option value="22pt">22pt</option>
+                    <option value="24pt">24pt</option>
+                </select>
+
             </div>}
             {editor && <BubbleMenu editor={editor} shouldShow={({ state, from }) => {
                 const $pos = state.doc.resolve(from)
