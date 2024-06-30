@@ -1,6 +1,6 @@
 "use client"
 
-import Tiptap from "@/app/componets/Tiptap";
+import Tiptap from "@/app/componets/tiptap/Tiptap";
 import { useState } from "react";
 import cookie from 'js-cookie';
 import { useRouter } from "next/navigation";
@@ -22,7 +22,7 @@ export default function Home() {
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-16">
+        <main className="flex min-h-screen flex-col items-center justify-between p-16 mx-auto max-w-4xl">
             <div className="z-10 w-full max-w-7xl font-mono text-sm">
                 {!readonly && <h1 className="text-4xl font-bold mb-8">Tiptap Editor</h1>}
                 <button onClick={() => setReadonly(!readonly)}>Change Mode</button>

@@ -2,14 +2,14 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import { createLowlight } from 'lowlight';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import CustomImage from "@/app/componets/customImage"
+import CustomImage from "@/app/componets/tiptap/customImage"
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import js from 'highlight.js/lib/languages/javascript'
 import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
-import { SmilieReplacer } from '@/app/componets/smilieReplacer';
+import { SmilieReplacer } from '@/app/componets/tiptap/smilieReplacer';
 import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style'
 import FontSize from 'tiptap-extension-font-size';
@@ -161,43 +161,25 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
                 >
                     Strike
                 </button>
-                <button
-                    onClick={() => editor.chain().focus().setFontFamily('Inter').run()}
-                    className={editor.isActive('textStyle', { fontFamily: 'Inter' }) ? 'is-active' : ''}
-                    data-test-id="inter"
-                >
-                    Inter
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().setFontFamily('Comic Sans MS, Comic Sans').run()}
-                    className={
-                        editor.isActive('textStyle', { fontFamily: 'Comic Sans MS, Comic Sans' })
-                            ? 'is-active'
-                            : ''
-                    }
-                    data-test-id="comic-sans"
-                >
-                    Comic Sans
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().setFontFamily('serif').run()}
-                    className={editor.isActive('textStyle', { fontFamily: 'serif' }) ? 'is-active' : ''}
-                    data-test-id="serif"
-                >
-                    Serif
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().setFontFamily('monospace').run()}
-                    className={editor.isActive('textStyle', { fontFamily: 'monospace' }) ? 'is-active' : ''}
-                    data-test-id="monospace"
-                >
-                    Monospace
-                </button>
                 <select
-                className='is-active'
+                    className='is-active'
+                    onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
+                    value={editor.isActive('textStyle') ? editor.getAttributes('textStyle').fontFamily : 'monospace'} // Default to 16pt if not active
+                >
+                    <option value="monospace">Monospace</option>
+                    <option value="serif">Serif</option>
+                    <option value="Comic Sans MS, Comic Sans">Comic Sans</option>
+                    <option value="inter">Inter</option>
+                </select>
+
+
+                <select
+                    className='is-active'
                     onChange={(e) => editor.chain().focus().setFontSize(e.target.value).run()}
                     value={editor.isActive('textStyle') ? editor.getAttributes('textStyle').fontSize : '16pt'} // Default to 16pt if not active
                 >
+                    <option value="10pt">10pt</option>
+                    <option value="12pt">12pt</option>
                     <option value="14pt">14pt</option>
                     <option value="16pt">16pt</option>
                     <option value="18pt">18pt</option>

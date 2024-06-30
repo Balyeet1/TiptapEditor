@@ -41,6 +41,11 @@ body {
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
+
+
+/* ----------------------- tiptap component ---------------------------------------------------- */
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -50,6 +55,45 @@ body {
 .tiptap {
   :first-child {
     margin-top: 0;
+  }
+
+  h1,
+  h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+
+  mark {
+    background-color: #FAF594;
+    border-radius: 0.4rem;
+    box-decoration-break: clone;
+    padding: 0.1rem 0.3rem;
+  }
+
+  /* Placeholder (at the top) */
+  h1.is-empty:first-child::before {
+    color: var(--gray-4);
+    content: attr(data-placeholder);
+    height: 0;
+    pointer-events: none;
   }
 
   pre {
@@ -154,6 +198,12 @@ body {
   }
 }
 
+.is-active {
+  background-color: #70cff8;
+}
+
+/* ----------------------- tiptap component ---------------------------------------------------- */
+
 h1,
 h2,
 h3,
@@ -165,45 +215,3 @@ h6 {
   text-wrap: pretty;
 }
 
-h1,
-h2 {
-  margin-top: 3.5rem;
-  margin-bottom: 1.5rem;
-}
-
-h1 {
-  font-size: 2.4rem;
-}
-
-h2 {
-  font-size: 1.8rem;
-}
-
-h3 {
-  font-size: 1.4rem;
-}
-
-h4,
-h5,
-h6 {
-  font-size: 1rem;
-}
-
-mark {
-  background-color: #FAF594;
-  border-radius: 0.4rem;
-  box-decoration-break: clone;
-  padding: 0.1rem 0.3rem;
-}
-
-/* Placeholder (at the top) */
-h1.is-empty:first-child::before {
-  color: var(--gray-4);
-  content: attr(data-placeholder);
-  height: 0;
-  pointer-events: none;
-}
-
-.is-active {
-  background-color: #70cff8;
-}
