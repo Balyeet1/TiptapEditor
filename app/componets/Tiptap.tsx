@@ -1,9 +1,6 @@
-'use client'
-
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import { createLowlight } from 'lowlight';
-import Image from '@tiptap/extension-image';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import CustomImage from "@/app/componets/customImage"
 import StarterKit from '@tiptap/starter-kit'
@@ -15,6 +12,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import { SmilieReplacer } from '@/app/componets/smilieReplacer';
 import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style'
+import { config } from 'process';
 
 const CustomDocument = Document.extend({
     content: 'heading block*',
@@ -45,15 +43,31 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
             SmilieReplacer,
             CustomImage.extend({
                 addAttributes() {
-                    return {
+
+                    interface Config {
+                        src: { default: null };
+                        alt: { default: null };
+                        title: { default: null };
+                        width: { default: string };
+                        alignment: { default: string };
+                        float: { default: string };
+                        editable?: boolean;
+                    }
+
+                    const configs: Config = {
                         src: { default: null },
                         alt: { default: null },
                         title: { default: null },
                         width: { default: '100%' },
                         alignment: { default: 'center' },
                         float: { default: "none" },
-                        editable: {default: !isReadonly},
                     }
+
+                    if (!isReadonly) {
+                        configs.editable = true
+                    }
+
+                    return configs
                 }
             }),
             CustomDocument,

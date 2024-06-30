@@ -12,17 +12,6 @@ const CustomImage = Node.create({
     draggable: true,
     atom: true,
 
-    addAttributes() {
-        return {
-            src: { default: null },
-            alt: { default: null },
-            title: { default: null },
-            width: { default: '100%' },
-            alignment: { default: 'center' },
-            float: { default: "none" },
-            editable: { default: true },
-        }
-    },
     parseHTML() {
         return [{ tag: 'img[src]' }]
     },
