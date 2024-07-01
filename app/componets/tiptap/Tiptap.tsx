@@ -36,20 +36,6 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
 
             // Extensions with configs
 
-            /*CustomImage.extend({
-                addAttributes() {
-                    return {
-                        src: { default: null },
-                        alt: { default: null },
-                        title: { default: null },
-                        width: { default: '100%' },
-                        alignment: { default: 'center' },
-                        float: { default: "none" },
-                        ...(isReadonly ? {} : { editable: true }),
-                    }
-                },
-            }),*/
-
             FontFamily.configure({ types: ['textStyle'] }),
 
             Placeholder.configure({

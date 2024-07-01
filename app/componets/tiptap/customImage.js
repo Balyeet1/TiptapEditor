@@ -66,8 +66,6 @@ const getImageExtension = (isReadonly) => {
                 const [showMenu, setShowMenu] = useState(false);
                 const imageRef = useRef(null);
 
-                console.log(editable)
-
                 const handleImageClick = () => {
                     if (editable) setShowMenu(true);
                 };
