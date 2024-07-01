@@ -2,7 +2,7 @@ import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import Document from '@tiptap/extension-document'
 import { createLowlight } from 'lowlight';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import CustomImage from "@/app/componets/tiptap/customImage"
+import getImageExtension from "@/app/componets/tiptap/customImage"
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
 import Dropcursor from '@tiptap/extension-dropcursor'
@@ -32,9 +32,11 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
         extensions: [
             // Core Extensions
             StarterKit, SmilieReplacer, CustomDocument, Highlight, TextStyle, FontSize,
+            getImageExtension(isReadonly),
 
             // Extensions with configs
-            CustomImage.extend({
+
+            /*CustomImage.extend({
                 addAttributes() {
                     return {
                         src: { default: null },
@@ -46,7 +48,7 @@ const Tiptap = ({ className, content, onChange, isReadonly }: { className?: stri
                         ...(isReadonly ? {} : { editable: true }),
                     }
                 },
-            }),
+            }),*/
 
             FontFamily.configure({ types: ['textStyle'] }),
 
@@ -93,7 +95,7 @@ const Toolbar = ({ editor }: { editor: Editor }) => {
                     : "left"
     }
 
-    
+
     return (
         <div className="flex justify-between border border-white mb-5 cols-3 grid grid-cols-8 gap-2 sticky top-0 z-10 bg-white">
             <button onClick={addImage}>Add image</button>
