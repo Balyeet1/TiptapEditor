@@ -1,4 +1,11 @@
 @tailwind base;
+
+@layer base {
+  ul, ol {
+    list-style: revert;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
 
@@ -52,9 +59,25 @@ body {
   }
 }
 
+
 .tiptap {
   :first-child {
     margin-top: 0;
+  }
+
+  ul,
+  ol {
+    padding: 0 1rem;
+    margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+    li p {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
+  }
+
+  li::marker {
+    color: #000000;
   }
 
   /* Media Query for smaller screens */
@@ -114,7 +137,6 @@ body {
   }
 
   mark {
-    background-color: #FAF594;
     border-radius: 0.4rem;
     box-decoration-break: clone;
     padding: 0.1rem 0.3rem;
